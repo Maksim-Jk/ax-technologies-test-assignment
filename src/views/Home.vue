@@ -3,8 +3,9 @@
     <h2>Posts</h2>
     <SearchInput :handleSearch="handleSearch"/>
     <SortButton :handleTitleSort="handleTitleSort"/>
-    <PostList :posts="posts" :searchQuery="searchQuery"/>
-    <Pagination :totalPages="totalPages" :currentPage="currentPage" :handlePageChange="handlePageChange"/>
+    <PostList :posts="posts" :searchQuery="searchQuery" :isLoading="isLoading" :isError="isError" :error="error"/>
+    <Pagination v-if="!isError && !isLoading" :totalPages="totalPages" :currentPage="currentPage"
+                :handlePageChange="handlePageChange"/>
   </div>
 </template>
 
@@ -16,7 +17,7 @@ import SearchInput from '@/components/SearchInput.vue';
 import Pagination from "@/components/Pagination.vue";
 import SortButton from "@/components/SortButton.vue";
 
-const {posts, totalPages, fetchPosts} = usePosts();
+const {posts, totalPages, fetchPosts, isLoading, isError, error} = usePosts();
 const currentPage = ref(1);
 const pageSize = 10;
 const searchQuery = ref('');
@@ -36,7 +37,7 @@ const handleSearch = (query: string) => {
   searchQuery.value = query;
 };
 
-const handleTitleSort  = (sortByTitleOrder: string | undefined) => {
+const handleTitleSort = (sortByTitleOrder: string | undefined) => {
   fetchPosts(1, pageSize, searchQuery.value.toLowerCase(), sortByTitleOrder);
   currentPage.value = 1;
 }
@@ -52,9 +53,5 @@ const handleTitleSort  = (sortByTitleOrder: string | undefined) => {
 h2 {
   font-size: 24px;
   margin-bottom: 20px;
-}
-
-.sort-buttons {
-  margin-bottom: 10px;
 }
 </style>

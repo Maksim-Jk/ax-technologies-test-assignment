@@ -1,6 +1,6 @@
 import {ref} from "vue";
 
-export interface Post {
+export interface IPost {
     userId: number;
     id: number;
     title: string;
@@ -8,9 +8,12 @@ export interface Post {
 }
 
 export function usePosts() {
-    const posts = ref<Post[]>([]);
+    const posts = ref<IPost[]>([]);
     const totalPages = ref(0);
-    const cache: { [key: string]: Post[] } = {};
+    const isLoading = ref(false);
+    const isError = ref(false);
+    const errorMessage = ref<string | null>(null);
+    const cache: { [key: string]: IPost[] } = {};
 
     const fetchPosts = async (
         page: number,
@@ -18,10 +21,13 @@ export function usePosts() {
         query?: string,
         sortByTitleOrder?: string | undefined
     ) => {
+        isLoading.value = true;
+
         const cacheKey = `page=${page}&limit=${limit}&query=${query}&sortByTitle=${sortByTitleOrder}&sortOrder=${sortByTitleOrder}`;
 
         if (cache[cacheKey]) {
             posts.value = cache[cacheKey];
+            isLoading.value = false;
             return;
         }
 
@@ -32,11 +38,7 @@ export function usePosts() {
         }
 
         if (sortByTitleOrder) {
-            url += `&_sort=title`;
-
-            if (sortByTitleOrder) {
-                url += `&_order=${sortByTitleOrder}`;
-            }
+            url += `&_sort=title&_order=${sortByTitleOrder}`;
         }
 
         try {
@@ -52,9 +54,16 @@ export function usePosts() {
             cache[cacheKey] = data;
             posts.value = data;
         } catch (error) {
-            console.error('Error fetching posts:', error);
+            console.log('catch Error')
+            isError.value = true;
+            errorMessage.value = error.message;
+            console.log(isError.value, error.value);
+        } finally {
+            isLoading.value = false;
         }
     };
 
-    return {posts, totalPages, fetchPosts};
+
+    return {posts, totalPages, fetchPosts, isLoading, isError, error: errorMessage};
 }
+

@@ -1,21 +1,28 @@
 <template>
   <div class="post-list">
-    <div v-for="post in posts" :key="post.id" class="post-item">
-      <router-link :to="{ name: 'post-detail', params: { id: post.id }}" class="post-title">
-        <span v-html="highlightSearch(post.title)"></span>
-      </router-link>
-      <p v-html="highlightSearch(post.body)"></p>
-    </div>
+    <div v-if="isLoading" class="loading">Loading...</div>
+    <div v-else-if="isError" class="error">{{ error }}</div>
+    <ul v-else>
+      <li v-for="post in posts" :key="post.id" class="post-item">
+        <router-link :to="{ name: 'post-detail', params: { id: post.id }}" class="post-title">
+          <span v-html="highlightSearch(post.title)" class="title"></span>
+        </router-link>
+        <p v-html="highlightSearch(post.body)" class="body"></p>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
-import { Post } from "@/services/postsApi.ts";
+import { IPost } from "@/services/postsApi.ts";
 
 const props = defineProps<{
-  posts: Post[];
+  posts: IPost[];
   searchQuery: string;
+  isLoading: boolean;
+  isError: boolean;
+  error: string | null;
 }>()
 
 const highlightSearch = (text: string) => {
@@ -29,8 +36,14 @@ const highlightSearch = (text: string) => {
   margin-bottom: 20px;
 }
 
-.post-item {
+.loading,
+.error {
   margin-bottom: 10px;
+  color: #dc3545;
+}
+
+.post-item {
+  margin-bottom: 20px;
 }
 
 .post-title {
@@ -42,11 +55,12 @@ const highlightSearch = (text: string) => {
   text-decoration: underline;
 }
 
-.post-title span mark {
-  background-color: #00ff8c;
+.title mark,
+.body mark {
+  background-color: #ffc107; /* цвет для подсветки поиска */
 }
 
 mark {
-  background-color: #00ff8c;
+  background-color: #ffc107; /* цвет для подсветки поиска */
 }
 </style>
