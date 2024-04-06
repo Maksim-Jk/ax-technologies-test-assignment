@@ -47,8 +47,8 @@ const handlePageChange = (page: number) => {
 };
 
 const handleSearch = (query: string) => {
-  searchQuery.value = query;
   currentPage.value = 1;
+  searchQuery.value = query;
 };
 
 const handleTitleSort = (sortByTitleOrderValue: string | undefined) => {
@@ -57,6 +57,7 @@ const handleTitleSort = (sortByTitleOrderValue: string | undefined) => {
 }
 
 const handleChangeItemsPerPage = (pageSizeNumber: number) => {
+  currentPage.value = 1;
   pageSize.value = pageSizeNumber;
 };
 </script>
