@@ -10,7 +10,9 @@
           v-if="!isError && posts.length"
           :totalPages="totalPages"
           :currentPage="currentPage"
-          :handlePageChange="handlePageChange"/>
+          :handlePageChange="handlePageChange"
+          :handleChangeItemsPerPage="handleChangeItemsPerPage"
+      />
     </div>
   </header>
   <main class="main">
@@ -28,26 +30,31 @@ import SortButton from "@/components/SortButtons.vue";
 
 const {posts, totalPages, fetchPosts, isLoading, isError, error} = usePosts();
 const currentPage = ref(1);
-const pageSize = 10;
+const pageSize = ref(5);
 const searchQuery = ref('');
 
 onMounted(() => {
-  fetchPosts(currentPage.value, pageSize);
+  fetchPosts(currentPage.value, pageSize.value);
 });
 
 const handlePageChange = (page: number) => {
   currentPage.value = page;
-  fetchPosts(page, pageSize, searchQuery.value.toLowerCase());
+  fetchPosts(page, pageSize.value, searchQuery.value.toLowerCase());
+};
+
+const handleChangeItemsPerPage = (pageSizeNumber: number) => {
+  pageSize.value = pageSizeNumber;
+  fetchPosts(currentPage.value, pageSizeNumber, searchQuery.value.toLowerCase());
 };
 
 const handleSearch = (query: string) => {
-  fetchPosts(1, pageSize, query.toLowerCase());
-  currentPage.value = 1;
   searchQuery.value = query;
+  currentPage.value = 1;
+  fetchPosts(1, pageSize.value, query.toLowerCase());
 };
 
 const handleTitleSort = (sortByTitleOrder: string | undefined) => {
-  fetchPosts(1, pageSize, searchQuery.value.toLowerCase(), sortByTitleOrder);
+  fetchPosts(1, pageSize.value, searchQuery.value.toLowerCase(), sortByTitleOrder);
   currentPage.value = 1;
 }
 </script>
