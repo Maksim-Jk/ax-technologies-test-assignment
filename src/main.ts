@@ -1,5 +1,15 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import {createApp} from 'vue';
+import {createRouter, createWebHistory} from 'vue-router';
+import App from '@/views/App.vue';
+import Home from '@/views/Home.vue';
+import PostDetail from '@/views/PostDetail.vue';
 
-createApp(App).mount('#app')
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        {path: '/', component: Home},
+        {path: '/post/:id', name: 'post-detail', component: PostDetail}
+    ]
+});
+
+createApp(App).use(router).mount('#app');
