@@ -46,21 +46,5 @@ p {
 
 a {
     text-decoration: none;
-    color: #000000;
+    color: var(--text-color);
 }
-
-@keyframes lds-eclipse {
-    0% {
-        --webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    50% {
-        --webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-    }
-    100% {
-        --webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-

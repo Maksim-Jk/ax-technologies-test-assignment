@@ -1,5 +1,5 @@
 <template>
-  <div v-if="error" class="error">Error: {{ error }}</div>
+  <div v-if="error" class="error">Error: {{ props.error }}</div>
 </template>
 
 <script setup lang="ts">

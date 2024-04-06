@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted} from 'vue';
+import {ref, onMounted, Ref} from 'vue';
 import {usePosts} from '@/services/postsApi.ts';
 import PostList from '@/components/PostList.vue';
 import SearchInput from '@/components/ui/SearchInput.vue';
@@ -32,6 +32,7 @@ const {posts, totalPages, fetchPosts, isLoading, isError, error} = usePosts();
 const currentPage = ref(1);
 const pageSize = ref(5);
 const searchQuery = ref('');
+const sortByTitleOrder: Ref<string | undefined> = ref(undefined);
 
 onMounted(() => {
   fetchPosts(currentPage.value, pageSize.value);
@@ -39,23 +40,28 @@ onMounted(() => {
 
 const handlePageChange = (page: number) => {
   currentPage.value = page;
-  fetchPosts(page, pageSize.value, searchQuery.value.toLowerCase());
-};
-
-const handleChangeItemsPerPage = (pageSizeNumber: number) => {
-  pageSize.value = pageSizeNumber;
-  fetchPosts(currentPage.value, pageSizeNumber, searchQuery.value.toLowerCase());
+  reFetchData()
 };
 
 const handleSearch = (query: string) => {
   searchQuery.value = query;
   currentPage.value = 1;
-  fetchPosts(1, pageSize.value, query.toLowerCase());
+  reFetchData()
 };
 
-const handleTitleSort = (sortByTitleOrder: string | undefined) => {
-  fetchPosts(1, pageSize.value, searchQuery.value.toLowerCase(), sortByTitleOrder);
+const handleTitleSort = (sortByTitleOrderValue: string | undefined) => {
   currentPage.value = 1;
+  sortByTitleOrder.value = sortByTitleOrderValue;
+  reFetchData()
+}
+
+const handleChangeItemsPerPage = (pageSizeNumber: number) => {
+  pageSize.value = pageSizeNumber;
+  reFetchData()
+};
+
+const reFetchData = () => {
+  fetchPosts(currentPage.value, pageSize.value, searchQuery.value.toLowerCase(), sortByTitleOrder.value);
 }
 </script>
 
@@ -73,10 +79,5 @@ const handleTitleSort = (sortByTitleOrder: string | undefined) => {
   gap: 8px 20px;
   width: 100%;
   max-width: 500px;
-}
-
-h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
 }
 </style>
