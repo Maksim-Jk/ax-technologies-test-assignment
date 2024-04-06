@@ -13,6 +13,7 @@
           <h4 class="comment-title">{{ comment.name }}</h4>
           <p>{{ comment.body }}</p>
         </li>
+        <li v-if="!isError && comments.length === 0">No comments found</li>
       </ul>
     </div>
   </div>
@@ -26,7 +27,7 @@ import Loader from "@/components/ui/Loader.vue";
 import ErrorMessage from "@/components/ui/ErrorMessage.vue";
 
 const {comments, fetchComments, isLoading, isError, error} = useComments();
-
+console.log(error)
 const props = defineProps<{
   postId: number
 }>()

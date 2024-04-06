@@ -1,4 +1,4 @@
-import {ref} from "vue";
+import { ref} from "vue";
 
 export interface IPost {
     userId: number;
@@ -23,9 +23,8 @@ export function usePostDetails() {
             }
             post.value = await response.json();
         } catch (error) {
-            console.error('Error fetching post:', error);
             isError.value = true;
-            errorMessage.value = error.message;
+                errorMessage.value = error.message;
         } finally {
             isLoading.value = false;
         }

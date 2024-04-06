@@ -54,15 +54,10 @@ export function usePosts() {
             if (numberOfPosts) {
                 totalPages.value = Math.ceil(numberOfPosts / limit);
             }
-            if (Array.isArray(data) && data.length === 0) {
-                isError.value = true;
-                errorMessage.value = 'No posts available';
-            } else {
-                cache[cacheKey] = data;
-                posts.value = data;
-            }
+            cache[cacheKey] = data;
+            posts.value = data;
+
         } catch (error) {
-            console.log('catch Error')
             isError.value = true;
             errorMessage.value = error.message;
         } finally {
@@ -70,7 +65,6 @@ export function usePosts() {
         }
     };
 
-    console.log(isError.value, errorMessage.value);
     return {posts, totalPages, fetchPosts, isLoading, isError, error: errorMessage};
 }
 
