@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import {ref} from "vue";
 
 export interface IPost {
     userId: number;
@@ -31,5 +31,5 @@ export function usePostDetails() {
         }
     };
 
-    return { post, fetchPost, isLoading, isError, error: errorMessage };
+    return {post, fetchPost, isLoading, isError, error: errorMessage};
 }

@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import {ref} from "vue";
 
 export interface IComment {
     postId: number;
@@ -16,6 +16,8 @@ export function useComments() {
 
     const fetchComments = async (postId: number, authorName?: string) => {
         isLoading.value = true;
+        isError.value = false;
+        errorMessage.value = null;
 
         try {
             let url = `https://jsonplaceholder.typicode.com/posts/${postId}/comments`;
@@ -26,7 +28,14 @@ export function useComments() {
             if (!response.ok) {
                 throw new Error('Failed to fetch comments');
             }
-            comments.value = await response.json();
+            const data = await response.json();
+
+            if (Array.isArray(data) && data.length === 0) {
+                isError.value = true;
+                errorMessage.value = 'No comments available';
+            } else {
+                comments.value = data;
+            }
         } catch (error) {
             console.error('Error fetching comments:', error);
             isError.value = true;
@@ -36,5 +45,5 @@ export function useComments() {
         }
     };
 
-    return { comments, fetchComments, isLoading, isError, error: errorMessage };
+    return {comments, fetchComments, isLoading, isError, error: errorMessage};
 }

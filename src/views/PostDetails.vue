@@ -1,5 +1,6 @@
 <template>
   <div class="post-details">
+    <button @click="$router.go(-1)" class="back-button">Back</button>
     <Loader v-if="isLoading"/>
     <ErrorMessage v-else-if="isError" :error="error"/>
     <div v-else-if="post">
@@ -17,8 +18,8 @@ import {ref, onMounted, computed} from 'vue';
 import {usePostDetails} from "@/services/postDetailsApi.ts";
 import {useRoute} from 'vue-router';
 import CommentList from "@/components/CommentList.vue";
-import ErrorMessage from "@/components/ErrorMessage.vue";
-import Loader from "@/components/Loader.vue";
+import ErrorMessage from "@/components/ui/ErrorMessage.vue";
+import Loader from "@/components/ui/Loader.vue";
 
 const route = useRoute();
 const postId = ref(parseInt(route.params.id as string));
@@ -40,6 +41,11 @@ onMounted(async () => {
   padding: 20px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+.back-button{
+  max-width: 62px;
+  margin-bottom: 20px;
 }
 
 .post-body {

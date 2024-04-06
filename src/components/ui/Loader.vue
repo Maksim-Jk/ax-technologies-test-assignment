@@ -1,7 +1,3 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
   <div class="loader" title="0">
     <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -24,10 +20,15 @@
   </div>
 </template>
 
+<script setup lang="ts">
+
+</script>
+
 <style scoped>
-.loader{
+.loader {
   margin: 0 auto;
 }
+
 .loader svg path,
 .loader svg rect {
   fill: var(--color-primary);

@@ -16,9 +16,9 @@
 <script setup lang="ts">
 import {defineProps} from 'vue';
 import {IPost} from "@/services/postsApi.ts";
-import Loader from "@/components/Loader.vue";
-import PostListCard from "@/components/PostListCard.vue";
-import ErrorMessage from "@/components/ErrorMessage.vue";
+import Loader from "@/components/ui/Loader.vue";
+import PostListCard from "@/components/ui/PostListCard.vue";
+import ErrorMessage from "@/components/ui/ErrorMessage.vue";
 
 const props = defineProps<{
   posts: IPost[];

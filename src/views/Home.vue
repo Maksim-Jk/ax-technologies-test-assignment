@@ -7,7 +7,7 @@
         <SortButton :handleTitleSort="handleTitleSort"/>
       </div>
       <Pagination
-          v-if="!isError"
+          v-if="!isError && posts.length"
           :totalPages="totalPages"
           :currentPage="currentPage"
           :handlePageChange="handlePageChange"/>
@@ -22,9 +22,9 @@
 import {ref, onMounted} from 'vue';
 import {usePosts} from '@/services/postsApi.ts';
 import PostList from '@/components/PostList.vue';
-import SearchInput from '@/components/SearchInput.vue';
+import SearchInput from '@/components/ui/SearchInput.vue';
 import Pagination from "@/components/Pagination.vue";
-import SortButton from "@/components/SortButton.vue";
+import SortButton from "@/components/SortButtons.vue";
 
 const {posts, totalPages, fetchPosts, isLoading, isError, error} = usePosts();
 const currentPage = ref(1);

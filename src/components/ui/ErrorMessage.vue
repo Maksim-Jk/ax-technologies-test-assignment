@@ -8,7 +8,6 @@ import {defineProps} from "vue";
 const props = defineProps<{
   error: string | null
 }>()
-
 </script>
 
 <style scoped>

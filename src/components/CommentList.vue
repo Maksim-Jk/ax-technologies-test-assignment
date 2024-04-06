@@ -21,9 +21,9 @@
 <script setup lang="ts">
 import {onMounted} from "vue";
 import {useComments} from "@/services/postCommentsApi.ts";
-import SearchInput from "@/components/SearchInput.vue";
-import Loader from "@/components/Loader.vue";
-import ErrorMessage from "@/components/ErrorMessage.vue";
+import SearchInput from "@/components/ui/SearchInput.vue";
+import Loader from "@/components/ui/Loader.vue";
+import ErrorMessage from "@/components/ui/ErrorMessage.vue";
 
 const {comments, fetchComments, isLoading, isError, error} = useComments();
 

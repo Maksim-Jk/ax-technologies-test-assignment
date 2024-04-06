@@ -1,9 +1,10 @@
 <template>
   <div class="pagination">
-    <button class="pagination-button" @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Prev</button>
-    <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
-    <button class="pagination-button" @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Next
-    </button>
+    <Button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Prev</Button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <Button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">
+      Next
+    </Button>
   </div>
 </template>
 
@@ -27,9 +28,10 @@ const goToPage = (page: number) => {
 .pagination {
   display: flex;
   align-items: center;
+  gap: 12px;
 }
 
 .pagination-info {
-  margin: 0 1rem;
+  margin: 0 16px;
 }
 </style>

@@ -25,6 +25,11 @@ const props = defineProps<{
   transition: box-shadow 0.3s ease;
 }
 
+.post-link:focus {
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-medium);
+}
+
 .post-item:hover {
   box-shadow: var(--shadow-medium-hover);
 }
@@ -34,12 +39,5 @@ const props = defineProps<{
   width: 100%;
   height: 100%;
   padding: 20px;
-}
-
-
-.post-title {
-}
-
-.post-title:hover {
 }
 </style>
