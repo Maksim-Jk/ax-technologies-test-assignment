@@ -37,8 +37,9 @@ const sortByTitleOrder: Ref<string | undefined> = ref(undefined);
 onMounted(() => {
   fetchPosts(currentPage.value, pageSize.value);
   watch([searchQuery, sortByTitleOrder, currentPage, pageSize],
-      () => fetchPosts(currentPage.value, pageSize.value, searchQuery.value.toLowerCase(), sortByTitleOrder.value)
-  )
+      () => {
+        fetchPosts(currentPage.value, pageSize.value, searchQuery.value.toLowerCase(), sortByTitleOrder.value)
+      })
 });
 
 const handlePageChange = (page: number) => {
