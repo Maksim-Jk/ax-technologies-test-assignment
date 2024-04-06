@@ -1,17 +1,21 @@
 <template>
-  <div class="container">
-    <h2>Posts</h2>
+  <header>
+    <h1>Posts</h1>
     <div class="controls">
-      <SearchInput :handleSearch="handleSearch"/>
-      <SortButton :handleTitleSort="handleTitleSort"/>
+      <div class="controls-filter">
+        <SearchInput :handleSearch="handleSearch"/>
+        <SortButton :handleTitleSort="handleTitleSort"/>
+      </div>
       <Pagination
           v-if="!isError"
           :totalPages="totalPages"
           :currentPage="currentPage"
           :handlePageChange="handlePageChange"/>
     </div>
+  </header>
+  <main class="main">
     <PostList :posts="posts" :searchQuery="searchQuery" :isLoading="isLoading" :isError="isError" :error="error"/>
-  </div>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -49,14 +53,19 @@ const handleTitleSort = (sortByTitleOrder: string | undefined) => {
 </script>
 
 <style>
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-.controls{
+.controls {
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.controls-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  width: 100%;
+  max-width: 500px;
 }
 
 h2 {

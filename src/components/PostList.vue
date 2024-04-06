@@ -1,21 +1,24 @@
 <template>
   <div class="post-list">
-    <div v-if="isLoading" class="loading">Loading...</div>
-    <div v-else-if="isError" class="error">{{ error }}</div>
-    <ul v-else>
-      <li v-for="post in posts" :key="post.id" class="post-item">
-        <router-link :to="{ name: 'post-detail', params: { id: post.id }}" class="post-title">
-          <span v-html="highlightSearch(post.title)" class="title"></span>
-        </router-link>
-        <p v-html="highlightSearch(post.body)" class="body"></p>
-      </li>
+    <Loader v-if="isLoading"/>
+    <ErrorMessage v-else-if="isError" :error="error"/>
+    <ul v-else class="post-list">
+      <PostListCard
+          v-for="post in posts"
+          :key="post.id"
+          :title="highlightSearch(post.title)"
+          :body="highlightSearch(post.body)"
+          :post-id="post.id"/>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
-import { IPost } from "@/services/postsApi.ts";
+import {defineProps} from 'vue';
+import {IPost} from "@/services/postsApi.ts";
+import Loader from "@/components/Loader.vue";
+import PostListCard from "@/components/PostListCard.vue";
+import ErrorMessage from "@/components/ErrorMessage.vue";
 
 const props = defineProps<{
   posts: IPost[];
@@ -33,34 +36,11 @@ const highlightSearch = (text: string) => {
 
 <style scoped>
 .post-list {
-  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
-.loading,
-.error {
-  margin-bottom: 10px;
-  color: #dc3545;
-}
-
-.post-item {
-  margin-bottom: 20px;
-}
-
-.post-title {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.post-title:hover {
-  text-decoration: underline;
-}
-
-.title mark,
-.body mark {
-  background-color: #ffc107; /* цвет для подсветки поиска */
-}
-
-mark {
-  background-color: #ffc107; /* цвет для подсветки поиска */
-}
 </style>

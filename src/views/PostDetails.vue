@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <div v-if="isLoading" class="loading">Loading...</div>
-    <div v-else-if="isError" class="error">{{ error }}</div>
+  <div class="post-details">
+    <Loader v-if="isLoading"/>
+    <ErrorMessage v-else-if="isError" :error="error"/>
     <div v-else-if="post">
-      <h2>{{ post.title }}</h2>
-      <p>{{ post.body }}</p>
+      <div class="post-body">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.body }}</p>
+      </div>
       <CommentList :postId="postId"/>
     </div>
   </div>
@@ -15,6 +17,8 @@ import {ref, onMounted, computed} from 'vue';
 import {usePostDetails} from "@/services/postDetailsApi.ts";
 import {useRoute} from 'vue-router';
 import CommentList from "@/components/CommentList.vue";
+import ErrorMessage from "@/components/ErrorMessage.vue";
+import Loader from "@/components/Loader.vue";
 
 const route = useRoute();
 const postId = ref(parseInt(route.params.id as string));
@@ -27,23 +31,18 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.loading,
-.error {
-  margin-bottom: 10px;
-  color: #dc3545;
+.post-details {
+  width: 100%;
+  background-color: var(--background-card);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-medium);
+  transition: box-shadow 0.3s ease;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
 }
 
-.search-input {
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
-  outline: none;
-  transition: border-color 0.2s ease;
-  margin-bottom: 10px;
-}
-
-.search-input:focus {
-  border-color: #007bff;
+.post-body {
+  margin-bottom: 20px;
 }
 </style>

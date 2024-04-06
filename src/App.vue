@@ -3,14 +3,12 @@ import {RouterLink, RouterView} from 'vue-router'
 </script>
 
 <template>
-  <div>
-    <RouterLink to="/post/1">Post</RouterLink>
+  <div class="container">
     <RouterView/>
   </div>
 </template>
 
-<style \>
-@import "@/styles/reset.css";
-@import "@/styles/global.css";
+<style>
+@import "@/styles/index.css";
 
 </style>
