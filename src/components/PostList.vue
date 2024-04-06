@@ -9,6 +9,7 @@
           :title="highlightSearch(post.title)"
           :body="highlightSearch(post.body)"
           :post-id="post.id"/>
+      <li v-if="!isError && posts.length === 0">No posts found</li>
     </ul>
   </div>
 </template>

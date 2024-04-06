@@ -1,8 +1,8 @@
 <template>
   <div class="pagination">
-    <Button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Prev</Button>
+    <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Prev</button>
     <span>Page {{ currentPage }} of {{ totalPages }}</span>
-    <Button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Next</Button>
+    <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Next</button>
     <select v-model="itemsPerPage" @change="handleSelectChange" class="pages-select">
       <option v-for="option in itemsPerPageOptions" :key="option" :value="option">
         {{ option }}

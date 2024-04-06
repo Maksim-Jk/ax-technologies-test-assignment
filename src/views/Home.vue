@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted, Ref} from 'vue';
+import {ref, onMounted, Ref, watch} from 'vue';
 import {usePosts} from '@/services/postsApi.ts';
 import PostList from '@/components/PostList.vue';
 import SearchInput from '@/components/ui/SearchInput.vue';
@@ -36,33 +36,28 @@ const sortByTitleOrder: Ref<string | undefined> = ref(undefined);
 
 onMounted(() => {
   fetchPosts(currentPage.value, pageSize.value);
+  watch([searchQuery, sortByTitleOrder, currentPage, pageSize],
+      () => fetchPosts(currentPage.value, pageSize.value, searchQuery.value.toLowerCase(), sortByTitleOrder.value)
+  )
 });
 
 const handlePageChange = (page: number) => {
   currentPage.value = page;
-  reFetchData()
 };
 
 const handleSearch = (query: string) => {
   searchQuery.value = query;
   currentPage.value = 1;
-  reFetchData()
 };
 
 const handleTitleSort = (sortByTitleOrderValue: string | undefined) => {
   currentPage.value = 1;
   sortByTitleOrder.value = sortByTitleOrderValue;
-  reFetchData()
 }
 
 const handleChangeItemsPerPage = (pageSizeNumber: number) => {
   pageSize.value = pageSizeNumber;
-  reFetchData()
 };
-
-const reFetchData = () => {
-  fetchPosts(currentPage.value, pageSize.value, searchQuery.value.toLowerCase(), sortByTitleOrder.value);
-}
 </script>
 
 <style>

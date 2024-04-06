@@ -18,8 +18,9 @@ const props = defineProps<{
 }>()
 const query = ref('');
 
-const handleInput = debounce(() => {
-  props.handleSearch(query.value.trim());
+const handleInput = debounce((event: Event) => {
+  const inputElement = event.target as HTMLInputElement;
+  props.handleSearch(inputElement.value.trim());
 }, 300);
 
 const handleReset = () => {
