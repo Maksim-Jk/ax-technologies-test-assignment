@@ -3,8 +3,6 @@
     <Button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Prev</Button>
     <span>Page {{ currentPage }} of {{ totalPages }}</span>
     <Button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Next</Button>
-
-    <!-- Добавленный выпадающий селект -->
     <select v-model="itemsPerPage" @change="handleSelectChange" class="pages-select">
       <option v-for="option in itemsPerPageOptions" :key="option" :value="option">
         {{ option }}
@@ -41,6 +39,7 @@ const handleSelectChange = () => {
 .pagination {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
