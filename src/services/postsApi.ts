@@ -7,14 +7,6 @@ export interface Post {
     body: string;
 }
 
-interface Comment {
-    postId: number;
-    id: number;
-    name: string;
-    email: string;
-    body: string;
-}
-
 export function usePosts() {
     const posts = ref<Post[]>([]);
     const totalPages = ref(0);
