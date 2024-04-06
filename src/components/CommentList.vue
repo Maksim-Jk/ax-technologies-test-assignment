@@ -27,7 +27,6 @@ import Loader from "@/components/ui/Loader.vue";
 import ErrorMessage from "@/components/ui/ErrorMessage.vue";
 
 const {comments, fetchComments, isLoading, isError, error} = useComments();
-console.log(error)
 const props = defineProps<{
   postId: number
 }>()

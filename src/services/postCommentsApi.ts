@@ -36,12 +36,10 @@ export function useComments() {
             console.error('Error fetching comments:', error);
             isError.value = true;
             errorMessage.value = error.message;
-            console.log(isError.value, errorMessage.value)
         } finally {
             isLoading.value = false;
         }
     };
-    console.log(isError.value, errorMessage.value)
 
     return {comments, fetchComments, isLoading, isError, error: errorMessage};
 }

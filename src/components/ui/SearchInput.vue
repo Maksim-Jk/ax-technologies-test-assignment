@@ -1,6 +1,6 @@
 <template>
   <div class="search-input-container">
-    <input type="text" v-model="query" @input="handleInput" placeholder="Search..." class="search-input">
+    <input type="text" v-model="query" @input="handleInputWrapper" placeholder="Search..." class="search-input">
     <div v-if="query" @click="handleReset" class="reset-button">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
         <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
@@ -18,11 +18,12 @@ const props = defineProps<{
 }>()
 const query = ref('');
 
-const handleInput = () => {
+const handleInputWrapper = () => {
   debounce(() => {
     props.handleSearch(query.value.trim());
-  }, 300);
-}
+  }, 300)();
+};
+
 
 const handleReset = () => {
   query.value = '';
