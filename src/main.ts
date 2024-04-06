@@ -2,7 +2,7 @@ import {createApp} from 'vue';
 import {createRouter, createWebHistory} from 'vue-router';
 import App from '@/App.vue';
 import Home from '@/views/Home.vue';
-import PostDetail from '@/views/PostDetail.vue';
+import PostDetail from '@/views/PostDetails.vue';
 
 const router = createRouter({
     history: createWebHistory(),

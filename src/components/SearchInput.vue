@@ -1,5 +1,5 @@
 <template>
-  <input type="text" v-model="query" @input="handleInput" placeholder="Search...">
+  <input type="text" v-model="query" @input="handleInput" placeholder="Search..." class="search-input">
 </template>
 
 <script setup lang="ts">
@@ -16,5 +16,17 @@ const handleInput = debounce(() => {
 }, 300);
 </script>
 
-<style>
+<style scoped>
+.search-input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+}
 </style>

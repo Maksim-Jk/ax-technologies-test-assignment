@@ -11,5 +11,6 @@ import {RouterLink, RouterView} from 'vue-router'
 
 <style \>
 @import "@/styles/reset.css";
+@import "@/styles/global.css";
 
 </style>
