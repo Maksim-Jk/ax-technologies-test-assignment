@@ -9,6 +9,5 @@ import {RouterView} from 'vue-router'
 </script>
 
 <style>
-@import "@/styles/index.css";
 
 </style>
