@@ -1,11 +1,8 @@
+// usePosts.ts
 import {ref} from "vue";
-
-export interface IPost {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
-}
+import {IPost} from "@/types/post.types";
+import {API_LINK, CACHE_MAX_AGE} from "@/globals.ts";
+import {getSessionStorage, setSessionStorage} from "@/utils/storageUtils.ts";
 
 export function usePosts() {
     const posts = ref<IPost[]>([]);
@@ -13,7 +10,6 @@ export function usePosts() {
     const isLoading = ref(false);
     const isError = ref(false);
     const errorMessage = ref<string | null>(null);
-    const cache: { [key: string]: IPost[] } = {};
 
     const fetchPosts = async (
         page: number,
@@ -26,13 +22,19 @@ export function usePosts() {
         errorMessage.value = null;
         const cacheKey = `page=${page}&limit=${limit}&query=${query}&sortByTitle=${sortByTitleOrder}&sortOrder=${sortByTitleOrder}`;
 
-        if (cache[cacheKey]) {
-            posts.value = cache[cacheKey];
+        const cachedData = getSessionStorage<{ postsData: IPost[]; totalPagesData: number }>(
+            cacheKey,
+            CACHE_MAX_AGE
+        );
+        if (cachedData) {
+            const {postsData, totalPagesData} = cachedData;
+            posts.value = postsData;
+            totalPages.value = totalPagesData;
             isLoading.value = false;
             return;
         }
 
-        let url = `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`;
+        let url = `${API_LINK}/posts?_page=${page}&_limit=${limit}`;
 
         if (query) {
             url += `&q=${query}`;
@@ -54,7 +56,9 @@ export function usePosts() {
             if (numberOfPosts) {
                 totalPages.value = Math.ceil(numberOfPosts / limit);
             }
-            cache[cacheKey] = data;
+
+            setSessionStorage(cacheKey, {postsData: data, totalPagesData: totalPages.value});
+
             posts.value = data;
 
         } catch (error) {
@@ -67,4 +71,3 @@ export function usePosts() {
 
     return {posts, totalPages, fetchPosts, isLoading, isError, error: errorMessage};
 }
-

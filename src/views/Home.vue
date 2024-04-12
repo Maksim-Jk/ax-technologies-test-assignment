@@ -3,7 +3,7 @@
     <h1>Posts</h1>
     <div class="controls">
       <div class="controls-filter">
-        <SearchInput :handleSearch="handleSearch"/>
+        <SearchInput @input="handleSearch"/>
         <SortButton :handleTitleSort="handleTitleSort"/>
       </div>
       <Pagination
@@ -16,7 +16,7 @@
     </div>
   </header>
   <main class="main">
-    <PostList :posts="posts" :searchQuery="searchQuery" :isLoading="isLoading" :isError="isError" :error="error"/>
+    <PostList :posts="posts || []" :searchQuery="searchQuery" :isLoading="isLoading" :isError="isError" :error="error"/>
   </main>
 </template>
 
@@ -36,11 +36,12 @@ const sortByTitleOrder: Ref<string | undefined> = ref(undefined);
 
 onMounted(() => {
   fetchPosts(currentPage.value, pageSize.value);
-  watch([searchQuery, sortByTitleOrder, currentPage, pageSize],
-      () => {
-        fetchPosts(currentPage.value, pageSize.value, searchQuery.value.toLowerCase(), sortByTitleOrder.value)
-      })
 });
+
+watch([searchQuery, sortByTitleOrder, currentPage, pageSize],
+    () => {
+      fetchPosts(currentPage.value, pageSize.value, searchQuery.value.toLowerCase(), sortByTitleOrder.value)
+    }, {immediate: true});
 
 const handlePageChange = (page: number) => {
   currentPage.value = page;

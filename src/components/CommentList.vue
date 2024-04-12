@@ -3,7 +3,7 @@
     <h3>Comments</h3>
     <div class="comments-filter">
       Find comments by name
-      <SearchInput :handleSearch="handleCommentSearch"/>
+      <SearchInput @input="handleCommentSearch"/>
     </div>
     <div class="comments-body">
       <Loader v-if="isLoading"/>
