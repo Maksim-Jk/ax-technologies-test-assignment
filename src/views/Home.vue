@@ -58,6 +58,7 @@ const handleTitleSort = (sortByTitleOrderValue: string | undefined) => {
 }
 
 const handleChangeItemsPerPage = (pageSizeNumber: number) => {
+  currentPage.value = 1;
   pageSize.value = pageSizeNumber;
 };
 </script>
