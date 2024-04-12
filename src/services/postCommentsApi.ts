@@ -1,7 +1,9 @@
+// useComments.ts
 import {ref} from "vue";
-import {API_LINK} from "@/globals.ts";
+import {API_LINK, CACHE_MAX_AGE} from "@/globals.ts";
+import {getSessionStorage, setSessionStorage} from "@/utils/storageUtils.ts";
 
-export interface IComment {
+interface IComment {
     postId: number;
     id: number;
     name: string;
@@ -15,10 +17,19 @@ export function useComments() {
     const isError = ref(false);
     const errorMessage = ref<string | null>(null);
 
-    const fetchComments = async (postId: number, authorName?: string,) => {
+    const fetchComments = async (postId: number, authorName?: string) => {
         isLoading.value = true;
         isError.value = false;
         errorMessage.value = null;
+
+        const cacheKey = `comments-${postId}-${authorName || ''}`;
+
+        const cachedComments = getSessionStorage<IComment[]>(cacheKey, CACHE_MAX_AGE);
+        if (cachedComments) {
+            comments.value = cachedComments;
+            isLoading.value = false;
+            return;
+        }
 
         try {
             let url = `${API_LINK}/posts/${postId}/comments`;
@@ -31,6 +42,9 @@ export function useComments() {
             }
 
             const data = await response.json();
+
+            setSessionStorage(cacheKey, data);
+
             comments.value = data;
 
         } catch (error) {
