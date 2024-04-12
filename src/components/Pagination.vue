@@ -17,22 +17,24 @@ import {defineProps, ref} from 'vue';
 const props = defineProps<{
   totalPages: number;
   currentPage: number;
-  handlePageChange: (page: number) => void
-  handleChangeItemsPerPage: (pageSize: number) => void
 }>()
+
+const emits = defineEmits(['pageChange', 'pageSizeChange']);
 
 const itemsPerPageOptions = [5, 10, 20];
 const itemsPerPage = ref(itemsPerPageOptions[0]);
 
 const goToPage = (page: number) => {
   if (page >= 1 && page <= props.totalPages) {
-    props.handlePageChange(page);
+    emits('pageChange', page);
   }
 }
 
 const handleSelectChange = () => {
-  props.handleChangeItemsPerPage(itemsPerPage.value);
+  emits('pageSizeChange', itemsPerPage.value);
 }
+
+
 </script>
 
 <style scoped>

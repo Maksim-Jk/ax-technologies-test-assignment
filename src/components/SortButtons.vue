@@ -19,20 +19,17 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 
-const props = defineProps<{
-  handleTitleSort: (order: string | undefined) => void;
-}>()
-
+const emit = defineEmits(['titleSort']);
 const sortByTitleOrder = ref<string | undefined>(undefined);
 
 const toggleSortOrder = () => {
   sortByTitleOrder.value = sortByTitleOrder.value === 'asc' ? 'desc' : 'asc';
-  props.handleTitleSort(sortByTitleOrder.value);
+  emit('titleSort', sortByTitleOrder.value);
 };
 
 const resetSortOrder = () => {
   sortByTitleOrder.value = undefined;
-  props.handleTitleSort(sortByTitleOrder.value);
+  emit('titleSort', undefined);
 };
 </script>
 
@@ -51,7 +48,6 @@ const resetSortOrder = () => {
   width: 12px;
   height: 12px;
 }
-
 
 .sort-icon.desc svg {
   transform: rotate(180deg);

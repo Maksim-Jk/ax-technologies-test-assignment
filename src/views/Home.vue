@@ -4,14 +4,14 @@
     <div class="controls">
       <div class="controls-filter">
         <SearchInput @input="handleSearch"/>
-        <SortButton :handleTitleSort="handleTitleSort"/>
+        <SortButton @title-sort="handleTitleSort"/>
       </div>
       <Pagination
           v-if="!isError && posts.length"
           :totalPages="totalPages"
           :currentPage="currentPage"
-          :handlePageChange="handlePageChange"
-          :handleChangeItemsPerPage="handleChangeItemsPerPage"
+          @page-change="handlePageChange"
+          @page-size-change="handleChangeItemsPerPage"
       />
     </div>
   </header>
