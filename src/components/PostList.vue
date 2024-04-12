@@ -16,10 +16,10 @@
 
 <script setup lang="ts">
 import {defineProps} from 'vue';
-import {IPost} from "@/services/postsApi.ts";
 import Loader from "@/components/ui/Loader.vue";
 import PostListCard from "@/components/ui/PostListCard.vue";
 import ErrorMessage from "@/components/ui/ErrorMessage.vue";
+import {IPost} from "@/types/post.types";
 
 const props = defineProps<{
   posts: IPost[];
