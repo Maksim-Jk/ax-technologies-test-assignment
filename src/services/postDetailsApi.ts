@@ -1,11 +1,6 @@
 import { ref} from "vue";
-
-export interface IPost {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
-}
+import {IPost} from "@/types/post.types";
+import {API_LINK} from "@/globals.ts";
 
 export function usePostDetails() {
     const post = ref<IPost | null>(null);
@@ -17,7 +12,7 @@ export function usePostDetails() {
         isLoading.value = true;
 
         try {
-            const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+            const response = await fetch(`${API_LINK}/posts/${postId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch post');
             }

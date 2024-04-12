@@ -1,11 +1,6 @@
 import {ref} from "vue";
-
-export interface IPost {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
-}
+import {IPost} from "@/types/post.types";
+import {API_LINK} from "@/globals.ts";
 
 export function usePosts() {
     const posts = ref<IPost[]>([]);
@@ -32,7 +27,7 @@ export function usePosts() {
             return;
         }
 
-        let url = `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`;
+        let url = `${API_LINK}/posts?_page=${page}&_limit=${limit}`;
 
         if (query) {
             url += `&q=${query}`;

@@ -1,4 +1,5 @@
 import {ref} from "vue";
+import {API_LINK} from "@/globals.ts";
 
 export interface IComment {
     postId: number;
@@ -20,7 +21,7 @@ export function useComments() {
         errorMessage.value = null;
 
         try {
-            let url = `https://jsonplaceholder.typicode.com/posts/${postId}/comments`;
+            let url = `${API_LINK}/posts/${postId}/comments`;
             if (authorName) {
                 url += `?name_like=${authorName}`;
             }
